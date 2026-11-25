@@ -9,6 +9,8 @@ export const db = mysql.createPool({
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
+    // hosted MySQL (TiDB Cloud, PlanetScale, Aiven, ...) requires TLS
+    ssl: process.env.DB_SSL === "true" ? { minVersion: "TLSv1.2", rejectUnauthorized: true } : undefined,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0

@@ -1,6 +1,11 @@
 import multer from "multer";
 import path from "path";
 import crypto from "crypto";
+import fs from "fs";
+
+const PROFILE_PHOTO_DIR = path.join(process.cwd(), "src", "public", "uploads", "profile-photos");
+// git doesn't track the empty folder, so a fresh deploy won't have it
+fs.mkdirSync(PROFILE_PHOTO_DIR, { recursive: true });
 
 const storage = multer.diskStorage({
 
@@ -8,14 +13,7 @@ const storage = multer.diskStorage({
         req,file,cb
 ) => {
 
-        cb(null, path.join(
-            process.cwd(),
-                "src",
-                "public",
-                "uploads",
-                "profile-photos"
-            )
-        );
+        cb(null, PROFILE_PHOTO_DIR);
 
     },
 

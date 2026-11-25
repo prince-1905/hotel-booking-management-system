@@ -88,7 +88,10 @@ export class DashboardService {
 
       date.setDate(date.getDate() - i);
 
-      const key = date.toISOString().split("T")[0];
+      // local YYYY-MM-DD, matching DATE_FORMAT(created_at, '%Y-%m-%d') in the query.
+      // (toISOString() is UTC and would be a day behind in IST before 05:30.)
+      const key =
+        `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 
       const label = date.toLocaleDateString("en-IN", {
         day: "numeric",
@@ -122,9 +125,9 @@ export class DashboardService {
 
     for (let i = 11; i >= 0; i--) {
 
-      const date = new Date();
-
-      date.setMonth(date.getMonth() - i);
+      // 1st of the month, so e.g. 31 Mar minus one month doesn't roll over to 3 Mar
+      const now = new Date();
+      const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
 
       const key =
         `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;

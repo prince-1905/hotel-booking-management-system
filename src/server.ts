@@ -5,7 +5,8 @@ import http from "http";
 import app from "./app";
 import { initializeSocket } from "./socket/socket";
 
-const PORT = process.env.PORTNU || 7777;
+// hosting platforms (Render, Railway, ...) inject PORT
+const PORT = process.env.PORT || 7777;
 
 // create http server
 const server = http.createServer(app);

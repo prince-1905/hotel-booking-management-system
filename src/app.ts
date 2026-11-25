@@ -29,6 +29,9 @@ app.use(sessionMiddleware);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+// multer writes uploads to <cwd>/src/public/uploads; serve them from there so they
+// also work when running the compiled build from dist/
+app.use("/uploads", express.static(path.join(process.cwd(), "src", "public", "uploads")));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

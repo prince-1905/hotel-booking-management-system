@@ -52,6 +52,7 @@ SELECT
     h.city,
     h.state,
     h.country,
+    h.cover_url,
     rt.room_type_id,
     rt.type_name,
     rt.base_price,

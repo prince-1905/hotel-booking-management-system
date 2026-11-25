@@ -27,14 +27,14 @@ export class DashboardModel {
 
           query = `
             SELECT
-              DATE(created_at) AS period_label,
+              DATE_FORMAT(created_at, '%Y-%m-%d') AS period_label,
               COALESCE(SUM(total_amount), 0) AS revenue
             FROM bookings
             WHERE hotel_id = ?
               AND booking_status_id IN (?,?,?)
               AND created_at >= DATE_SUB(CURDATE(), INTERVAL 6 DAY)
-            GROUP BY DATE(created_at)
-            ORDER BY DATE(created_at)
+            GROUP BY period_label
+            ORDER BY period_label
           `;
 
           params = [
@@ -53,7 +53,7 @@ export class DashboardModel {
             FROM bookings
             WHERE hotel_id = ?
               AND booking_status_id IN (?,?,?)
-              AND created_at >= DATE_SUB(CURDATE(), INTERVAL 11 MONTH)
+              AND created_at >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 11 MONTH), '%Y-%m-01')
             GROUP BY DATE_FORMAT(created_at, '%Y-%m')
             ORDER BY period_label
           `;
@@ -74,7 +74,7 @@ export class DashboardModel {
             FROM bookings
             WHERE hotel_id = ?
               AND booking_status_id IN (?,?,?)
-              AND created_at >= DATE_SUB(CURDATE(), INTERVAL 4 YEAR)
+              AND created_at >= MAKEDATE(YEAR(CURDATE()) - 4, 1)
             GROUP BY YEAR(created_at)
             ORDER BY YEAR(created_at)
           `;
