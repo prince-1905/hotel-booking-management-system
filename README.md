@@ -52,7 +52,8 @@ All demo accounts use the password **`Password@123`**.
 | 🧳 Guest | `guest@hbms.local` | [`/login`](https://luxestay-mu9b.onrender.com/login) → **Guest** tab |
 | 🛎️ Front Desk (Coral Bay Resort) | `frontdesk.coralbay@hbms.local` | [`/login`](https://luxestay-mu9b.onrender.com/login) → **Front Desk** tab |
 | 🏨 Hotel Admin (Coral Bay Resort) | `admin.coralbay@hbms.local` | [`/login`](https://luxestay-mu9b.onrender.com/login) → **Admin** tab |
-| 👑 Super Admin | `superadmin@hbms.local` | [`/superadmin/auth/login`](https://luxestay-mu9b.onrender.com/superadmin/auth/login) |
+
+The Super Admin console is private; see its screenshots below.
 
 Every hotel has its own staff logins: `admin.<hotel>@hbms.local` / `frontdesk.<hotel>@hbms.local` with `<hotel>` = `seaview`, `aravalli`, `coralbay`, `palmgrove`, `backwater`, `skyline`, `haveli`, `pinecrest`, `marina`, `capital`.
 

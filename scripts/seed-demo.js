@@ -225,6 +225,16 @@ const REQUESTS = [null, null, null, "Late check-in around 11 PM", "Extra pillows
 
   const pwHash = (await q("SELECT password_hash FROM users WHERE email='superadmin@hbms.local'"))[0].password_hash;
 
+  // On a public deployment the super admin must not use the shared demo password.
+  // Set SEED_SUPERADMIN_PASSWORD (and optionally SEED_SUPERADMIN_EMAIL) in the env file you seed with.
+  if (process.env.SEED_SUPERADMIN_PASSWORD) {
+    const bcrypt = require("bcryptjs");
+    const hash = await bcrypt.hash(process.env.SEED_SUPERADMIN_PASSWORD, 10);
+    await q("UPDATE users SET password_hash=?, email=? WHERE email='superadmin@hbms.local'",
+      [hash, process.env.SEED_SUPERADMIN_EMAIL || "superadmin@hbms.local"]);
+    console.log("   super admin: private password applied");
+  }
+
   console.log("2/5 Hotels, room types, rooms ...");
   await insertMany("amenities", ["amenity_name"], NEW_AMENITIES.map((a) => [a]));
   const amenityId = Object.fromEntries((await q("SELECT amenity_id, amenity_name FROM amenities")).map((r) => [r.amenity_name, r.amenity_id]));
