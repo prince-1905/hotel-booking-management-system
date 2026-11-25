@@ -197,6 +197,7 @@ const REQUESTS = [null, null, null, "Late check-in around 11 PM", "Extra pillows
     ssl: process.env.DB_SSL === "true" ? { minVersion: "TLSv1.2", rejectUnauthorized: true } : undefined,
   });
   const q = (sql, params) => conn.query(sql, params).then(([r]) => r);
+  if (process.env.DB_TIMEZONE) await q("SET time_zone = ?", [process.env.DB_TIMEZONE]);
   const insertMany = async (table, cols, rows) => {
     if (!rows.length) return;
     for (let i = 0; i < rows.length; i += 500) {
@@ -337,7 +338,8 @@ const REQUESTS = [null, null, null, "Late check-in around 11 PM", "Extra pillows
         hotel_id, user_id: pick(guestIds), status, source, checkin, checkout, nights, adults, children,
         rate: Number(type.base_price), rooms: chosen.map((r) => r.room_id),
         total: Number(type.base_price) * nights * want,
-        created: dt(created, int(7, 22), int(0, 59)),
+        // never in the future (a booking "made today" can't be later than now)
+        created: new Date(Math.min(dt(created, int(7, 22), int(0, 59)).getTime(), Date.now() - int(5, 90) * 60000)),
         request: pick(REQUESTS),
       };
       bookings.push(b);

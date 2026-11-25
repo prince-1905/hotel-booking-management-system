@@ -15,3 +15,11 @@ export const db = mysql.createPool({
     connectionLimit: 10,
     queueLimit: 0
 });
+
+// Hosted DBs run in UTC; CURDATE()/NOW() drive "today's arrivals", revenue days etc.,
+// so pin each session to the hotel time zone (e.g. DB_TIMEZONE=+05:30 for IST).
+if (process.env.DB_TIMEZONE) {
+    db.pool.on("connection", (conn) => {
+        conn.query("SET time_zone = ?", [process.env.DB_TIMEZONE]);
+    });
+}

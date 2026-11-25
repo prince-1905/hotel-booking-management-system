@@ -14,6 +14,11 @@ services:
         value: "24"
       - key: NODE_ENV
         value: production
+      # Render and TiDB run in UTC; keep "today" in IST for both Node and SQL
+      - key: TZ
+        value: Asia/Kolkata
+      - key: DB_TIMEZONE
+        value: "+05:30"
 
       # MySQL (TiDB Cloud Starter: Connect > "General" connection parameters)
       - key: DB_HOST
