@@ -87,7 +87,7 @@
                     </div>
                 </div>
             </header> -->
-        <%- include('../partials/header') %>
+        <%- include('../partials/header', { pageTitle: 'Dashboard' }) %>
             <div class="p-6 md:p-8 space-y-6 max-w-full w-full mx-auto">
                 
              
@@ -661,7 +661,7 @@ async function loadBookingStatusDistribution() {
         empty.classList.add("hidden");
 
         const response = await fetch(
-            "/hotelAdmin//booking-status-distribution"
+            "/hotelAdmin/booking-status-distribution"
         );
 
         if (!response.ok) {
@@ -693,12 +693,11 @@ async function loadBookingStatusDistribution() {
             result.data
         );
 
-        document.getElementById(
-            "bookingStatusTotal"
-        ).textContent =
-            result.totalBookings.toLocaleString(
-                "en-IN"
-            );
+        const totalText = result.totalBookings.toLocaleString("en-IN");
+        document.getElementById("bookingStatusTotal").textContent = totalText;
+        // the number in the middle of the donut
+        const center = document.getElementById("bookingStatusTotalCenter");
+        if (center) center.textContent = totalText;
 
     } catch (error) {
 

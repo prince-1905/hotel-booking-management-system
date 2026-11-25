@@ -45,7 +45,8 @@ export class GuestBookingModel {
            bs.status_name,
            h.name  AS hotel_name,
            h.city  AS hotel_city,
-           h.logo_url AS hotel_logo
+           h.logo_url AS hotel_logo,
+           h.cover_url AS hotel_cover
          FROM bookings b
          INNER JOIN booking_statuses bs ON b.booking_status_id = bs.booking_status_id
          INNER JOIN hotels            h  ON b.hotel_id         = h.hotel_id

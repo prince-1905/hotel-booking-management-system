@@ -589,8 +589,9 @@ body{
 
         <!-- hero -->
         <div class="bcard-hero">
-          <% if (isHttp(b.hotel_logo)) { %>
-            <img src="<%= b.hotel_logo %>" alt="<%= b.hotel_name %>"
+          <% const heroImg = isHttp(b.hotel_cover) ? b.hotel_cover : b.hotel_logo; %>
+          <% if (isHttp(heroImg)) { %>
+            <img src="<%= heroImg %>" alt="<%= b.hotel_name %>"
                  onerror="this.style.display='none'"/>
           <% } else { %>
             <div class="bcard-hero-fallback">🏨</div>

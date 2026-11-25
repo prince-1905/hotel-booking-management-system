@@ -115,9 +115,14 @@
         <div class="flex items-center gap-3 mb-4">
 
             <!-- profile photo — falls back to initials background if photo is null -->
-            <div class="w-10 h-10 rounded-full bg-[#775a19] flex items-center justify-center text-white font-semibold">
-                <img src="/uploads/profile-photos/<%= photo %>" alt="Profile"
-                    class="w-10 h-10 rounded-full object-cover border border-gray-300">
+            <div class="w-10 h-10 rounded-full bg-[#775a19] flex items-center justify-center text-white font-semibold shrink-0">
+                <% if (photo) { %>
+                    <img src="/uploads/profile-photos/<%= photo %>" alt=""
+                        onerror="var p = this.parentElement; p && (p.textContent = '<%= ((first_name || '')[0] || '') + ((last_name || '')[0] || '') %>');"
+                        class="w-10 h-10 rounded-full object-cover border border-gray-300">
+                <% } else { %>
+                    <%= ((first_name || '')[0] || '') + ((last_name || '')[0] || '') %>
+                <% } %>
             </div>
 
             <div>

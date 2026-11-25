@@ -1,7 +1,7 @@
  <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 md:px-8">
                 <div>
-                    <h1 class="text-xl font-bold text-slate-900">Room Categories</h1>
-                    <p class="text-xs text-slate-500 hidden sm:block">Global Management System</p>
+                    <h1 class="text-xl font-bold text-slate-900"><%= typeof pageTitle !== 'undefined' ? pageTitle : 'Hotel Admin' %></h1>
+                    <p class="text-xs text-slate-500 hidden sm:block"><%= typeof pageSubtitle !== 'undefined' ? pageSubtitle : 'Hotel Management' %></p>
                 </div>
                 <div class="flex items-center space-x-4">
                     <div class="flex items-center space-x-3 bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 cursor-pointer hover:bg-slate-100 transition">
