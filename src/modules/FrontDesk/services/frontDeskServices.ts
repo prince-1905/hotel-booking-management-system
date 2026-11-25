@@ -296,7 +296,7 @@ export const markRoomClean = async (
 ): Promise<void> => {
     const key = dirtyRoomKey(hotelId, roomId);
     await redis.del(key);
-    await frontDeskModel.markRoomAvailable(roomId);
+    await frontDeskModel.markRoomAvailable(roomId, hotelId);
 };
 
 // db-only flip to available — used by the worker when the redis key has already expired

@@ -564,8 +564,10 @@ export const markRoomsDirty = async (
     );
 };
 
-// mark a cleaned room as available
-export const markRoomAvailable = async (roomId: number) => {
+// mark a cleaned room as available.
+// Staff calls pass hotelId so a room of another hotel can't be touched;
+// the background worker (all hotels) omits it.
+export const markRoomAvailable = async (roomId: number, hotelId?: number) => {
     await db.query(
         `
         UPDATE rooms
@@ -575,9 +577,19 @@ export const markRoomAvailable = async (roomId: number) => {
             WHERE status_name = 'AVAILABLE'
         )
         WHERE room_id = ?
+        ${hotelId !== undefined ? "AND hotel_id = ?" : ""}
         `,
-        [roomId]
+        hotelId !== undefined ? [roomId, hotelId] : [roomId]
     );
+};
+
+// does this booking belong to this hotel? (guards staff actions that take ids from the browser)
+export const bookingBelongsToHotel = async (bookingId: number | string, hotelId: number): Promise<boolean> => {
+    const [rows]: any = await db.query(
+        `SELECT 1 FROM bookings WHERE booking_id = ? AND hotel_id = ? LIMIT 1`,
+        [bookingId, hotelId]
+    );
+    return rows.length > 0;
 };
 
 // fetch all rooms currently sitting in dirty state across all hotels
