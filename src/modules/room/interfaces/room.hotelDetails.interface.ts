@@ -16,5 +16,6 @@ export interface RoomType{
     max_children: Number,
     available_rooms: Number,
     description:string,
+    image_url:string|null,
     amenities: string[]
 }

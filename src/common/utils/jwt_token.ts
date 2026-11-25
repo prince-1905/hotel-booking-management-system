@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 export const generateToken = (
     userId: number,
-    roleId: number,
+    roleId: string,   // role name, e.g. "ADMIN" (allowRoles compares names)
     hotel_id?: number
 ): string => {
 

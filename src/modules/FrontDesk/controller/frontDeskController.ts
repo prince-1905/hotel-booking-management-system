@@ -132,6 +132,12 @@ export const storeDoc = async (
         const hotelId: number = getJwtTokenValue("hotel_id", req) as number;
         const verifiedBy: number = getJwtTokenValue("userId", req) as number;
 
+        // booking_id comes from the form: make sure it is one of this hotel's bookings
+        if (!(await frontDeskModel.bookingBelongsToHotel(booking_id, hotelId))) {
+            (req.session as any).failureMessage = "Booking not found for this hotel";
+            return res.redirect("/frontDesk/home");
+        }
+
         // upload document if provided
         let documentUrl: string | null = null;
         if (req.file) {

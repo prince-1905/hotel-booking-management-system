@@ -15,6 +15,7 @@ interface Room{
     city:string,
     state:string,
     country:string,
+    image_url:string|null,
     rooms:Room[]
   }
 

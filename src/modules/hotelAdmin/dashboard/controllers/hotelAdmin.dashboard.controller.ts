@@ -23,8 +23,8 @@ async renderDashboard(
 
     try {
 
-    //   const hotelId = (req as any).hotelId as number;
-const hotelId = 3;
+      // set by validToken from the logged-in admin's JWT
+      const hotelId = Number((req as any).hotelId);
       const period =
         (req.query.period as RevenuePeriod) || "daily";
 
@@ -53,9 +53,8 @@ async getBookingStatusDistribution(
 
   try {
 
-    // const hotelId =
-    //   (req as any).hotelId as number;
-const hotelId = 25;
+    // set by validToken from the logged-in admin's JWT
+    const hotelId = Number((req as any).hotelId);
     const result =
       await dashboardService
         .getBookingStatusDistribution(

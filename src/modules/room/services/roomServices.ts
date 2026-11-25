@@ -34,6 +34,7 @@ export const searchHotels = async (params: searchHotelReqBody) => {
         city: row.city,
         state: row.state,
         country: row.country,
+        image_url: row.cover_url,
 
         rooms: [],
       };
@@ -111,6 +112,7 @@ export const hotelDetails = async (hotelId: number, checkIn: string, checkOut: s
       max_children: element.max_children,
       available_rooms: element.available_rooms,
       description: element.description,
+      image_url: element.photo_url,
       amenities: element.amenities.split(',').map((item: string) => item.trim())
     })
   }

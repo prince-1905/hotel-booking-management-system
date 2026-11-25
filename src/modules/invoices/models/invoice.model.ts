@@ -43,6 +43,15 @@ export class InvoiceModel {
     }
   }
 
+  // Ownership check for the guest-facing download route
+  static async isGuestBooking(bookingId: number, hotelId: number, userId: number): Promise<boolean> {
+    const [rows]: any = await db.query(
+      `SELECT 1 FROM bookings WHERE booking_id = ? AND hotel_id = ? AND user_id = ? LIMIT 1`,
+      [bookingId, hotelId, userId]
+    );
+    return rows.length > 0;
+  }
+
   // Per-room line items for the booking
   static async getRoomLineItems(bookingId: number): Promise<any[]> {
     try {

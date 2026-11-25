@@ -16,7 +16,7 @@ export const getUserStats = async () => {
     const [[data]]: any = await db.query(`
         SELECT
             COUNT(*) AS total,
-            SUM(r.role_name = 'HOTEL_ADMIN') AS hotel_admins,
+            SUM(r.role_name = 'ADMIN')       AS hotel_admins,
             SUM(r.role_name = 'FRONT_DESK')  AS front_desk,
             SUM(r.role_name = 'GUEST')        AS guests
         FROM users u
